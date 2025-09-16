@@ -1,0 +1,180 @@
+/* Contact Us Page Styles */
+
+:root {
+  /* Contact Us specific CSS custom properties */
+  --contact-bg: #000000;
+  --contact-text: rgba(255, 255, 255, 0.85);
+  --contact-heading-size: 22px;
+  --contact-body-size: 18px;
+  --contact-spacing: 2rem;
+  --image-border-radius: 22px;
+  --image-border: 1px solid rgba(70, 230, 230, 0.2);
+  --image-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+  --image-gap: 16px;
+  --hover-lift: translateY(-2%);
+  --hover-glow: 0 0 20px rgba(70, 230, 230, 0.3);
+}
+
+/* Main Contact Us Page Container */
+.contact-us-page {
+  background-color: var(--contact-bg);
+  color: var(--contact-text);
+  min-height: 100vh;
+  width: 100%;
+  padding: var(--contact-spacing) 0;
+  position: relative;
+}
+
+/* Responsive CSS Grid Layout */
+.contact-us-container {
+  display: grid;
+  grid-template-rows: 1fr auto;
+  gap: calc(var(--contact-spacing) * 2);
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 var(--contact-spacing);
+  min-height: calc(100vh - calc(var(--contact-spacing) * 2));
+}
+
+/* Section Styling */
+.podcast-section,
+.brands-section {
+  text-align: center;
+  width: 100%;
+}
+
+/* Premium Typography */
+.section-heading {
+  font-size: var(--contact-heading-size);
+  font-weight: 700;
+  color: var(--contact-text);
+  margin: 0;
+  font-family: 'Inter', system-ui, sans-serif;
+  letter-spacing: 0.02em;
+}
+
+.section-text {
+  font-size: var(--contact-body-size);
+  color: var(--contact-text);
+  margin: 0;
+  font-family: 'Inter', system-ui, sans-serif;
+  line-height: 1.6;
+}
+
+.cta-text {
+  font-size: var(--contact-body-size);
+  color: var(--contact-text);
+  margin: 0 0 1rem 0;
+  font-family: 'Inter', system-ui, sans-serif;
+  line-height: 1.6;
+}
+
+/* Podcast and Brand Sections */
+.podcast-section {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: var(--contact-spacing);
+}
+
+.brands-section {
+  flex: 0 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  gap: var(--contact-spacing);
+}
+
+/* Contact Button Styling */
+.contact-button {
+  background: linear-gradient(135deg, rgba(70, 230, 230, 0.8), rgba(34, 211, 238, 0.8));
+  color: #000;
+  border: none;
+  padding: 12px 32px;
+  border-radius: 50px;
+  font-size: var(--contact-body-size);
+  font-weight: 600;
+  font-family: 'Inter', system-ui, sans-serif;
+  cursor: pointer;
+  transition: all 300ms ease;
+  box-shadow: 0 4px 16px rgba(70, 230, 230, 0.2);
+}
+
+.contact-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(70, 230, 230, 0.4);
+  background: linear-gradient(135deg, rgba(70, 230, 230, 0.9), rgba(34, 211, 238, 0.9));
+}
+
+.contact-button:focus {
+  outline: 2px solid rgba(70, 230, 230, 0.6);
+  outline-offset: 2px;
+}
+
+/* Podcast CTA Section */
+.podcast-cta {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .contact-us-container {
+    padding: 0 1rem;
+    gap: var(--contact-spacing);
+  }
+  
+  .section-heading {
+    font-size: 20px;
+  }
+  
+  .section-text,
+  .cta-text {
+    font-size: 16px;
+  }
+  
+  .contact-button {
+    font-size: 16px;
+    padding: 10px 24px;
+  }
+  
+  .podcast-placeholder,
+  .brands-placeholder {
+    padding: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .contact-us-page {
+    padding: 1rem 0;
+  }
+  
+  .contact-us-container {
+    padding: 0 0.75rem;
+  }
+  
+  .section-heading {
+    font-size: 18px;
+  }
+  
+  .section-text,
+  .cta-text {
+    font-size: 15px;
+  }
+}
+
+/* Accessibility - Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  .contact-button {
+    transition: none;
+  }
+  
+  .contact-button:hover {
+    transform: none;
+  }
+}

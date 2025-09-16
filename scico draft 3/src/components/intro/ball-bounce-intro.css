@@ -1,0 +1,181 @@
+.intro-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: grid;
+  place-items: center;
+  background: radial-gradient(120% 120% at 30% 20%, #0b0f18 0%, #050510 45%, #000 100%);
+}
+
+/* Subtle animated holo grid */
+.intro-overlay__bg {
+  position: absolute;
+  inset: 0;
+  opacity: 0.28;
+  overflow: hidden;
+}
+.intro-overlay__bg::before {
+  content: "";
+  position: absolute;
+  inset: -100% -100%;
+  background:
+    linear-gradient(rgba(0,255,255,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,255,255,0.04) 1px, transparent 1px);
+  background-size: 60px 60px;
+  filter: blur(0.2px) saturate(115%);
+  animation: intro-grid-pan 10s linear infinite;
+}
+@keyframes intro-grid-pan {
+  0% { transform: translate3d(0, 0, 0); }
+  100% { transform: translate3d(60px, 60px, 0); }
+}
+
+.intro-stage {
+  position: relative;
+}
+
+.intro-letters {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  color: #fff;
+  font-weight: 800;
+  letter-spacing: 0.01em;
+}
+
+.intro-letter {
+  display: inline-block;
+  font-family: "Orbitron", "Rajdhani", "Poppins", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  text-align: center;
+  line-height: 1; /* normalize to match O glyph baseline */
+}
+
+/* Ball base appearance */
+.intro-ball {
+  border-radius: 999px;
+  background: radial-gradient(circle at 30% 30%, #00D4FF, #0099CC 40%, #006699 70%);
+  box-shadow:
+    0 0 20px rgba(0,212,255,0.4),
+    0 0 40px rgba(0,212,255,0.2),
+    inset 0 0 20px rgba(255,255,255,0.12);
+  transition: background 320ms ease, box-shadow 320ms ease, border-color 320ms ease, border-width 320ms ease;
+  position: relative;
+  overflow: visible;
+}
+.intro-ball__glow {
+  position: absolute;
+  inset: -32px;
+  z-index: -1;
+  border-radius: 999px;
+  filter: blur(40px);
+  opacity: 0.85;
+  background: radial-gradient(circle at center, rgba(0,212,255,0.42), rgba(0,153,204,0.28) 50%, transparent 80%);
+  pointer-events: none;
+}
+.intro-ball__reflection {
+  position: absolute;
+  inset: 6px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, rgba(255,255,255,0.28), rgba(255,255,255,0) 35%);
+  pointer-events: none;
+}
+
+/* Morph ball into an O ring */
+.intro-ball--o {
+  background: transparent;
+  /* Remove ring and shadow to avoid inner artifact */
+  border: 0;
+  box-shadow: none;
+}
+.intro-ball--o .intro-ball__glow { opacity: 0; filter: none; }
+.intro-ball--o .intro-ball__reflection { opacity: 0; transition: opacity 240ms ease; }
+
+/* Remove inner fill element entirely to prevent black square */
+.intro-ball__hole { display: none !important; }
+/* Do not reveal the black inner fill when morphing to 'O' */
+/* .intro-ball--o .intro-ball__hole { opacity: 1; transform: scale(1); } */
+
+/* Proper glyph for final 'O' so it matches SCICO */
+.intro-ball__glyph {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  font-family: "Orbitron", "Rajdhani", "Poppins", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  font-weight: 800;
+  font-size: 72px; /* matches intro letters */
+  line-height: 1;
+  letter-spacing: 0.01em;
+  /* Solid fill (no background-clip) to avoid any black box artifacts */
+  color: #EAFBFF;
+  -webkit-text-fill-color: #EAFBFF;
+  background: none;
+  text-shadow: 0 0 10px rgba(34,211,238,0.35), 0 0 20px rgba(34,211,238,0.22), 0 0 40px rgba(217,70,239,0.12);
+  opacity: 0;
+  transform: translateY(6px) scale(0.98);
+  transition: opacity 260ms ease, transform 260ms ease, text-shadow 260ms ease;
+  pointer-events: none;
+}
+.intro-ball--o .intro-ball__glyph {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  /* Remove end shine animation */
+  animation: none;
+}
+
+/* Removed shine sweep keyframes to prevent any residual animation */
+
+/* Impact effect base */
+.intro-impact {
+  position: absolute;
+  top: 0;
+  pointer-events: none;
+}
+.intro-impact__ring,
+.intro-impact__ring--soft {
+  position: relative;
+  width: 64px;
+  height: 64px;
+  border-radius: 999px;
+}
+.intro-impact__ring {
+  border: 2px solid rgba(34, 211, 238, 0.6);
+}
+.intro-impact__ring--soft {
+  position: absolute;
+  inset: 0;
+  border: 1px solid rgba(168, 234, 255, 0.4);
+  animation: intro-ping 0.8s ease-out infinite;
+}
+@keyframes intro-ping {
+  0% { transform: scale(1); opacity: 1; }
+  100% { transform: scale(1.6); opacity: 0; }
+}
+.intro-impact__particle {
+  position: absolute;
+  width: 4px; height: 4px;
+  background: #22D3EE;
+  border-radius: 999px;
+}
+
+/* Bottom loading dots */
+.intro-dots {
+  position: absolute;
+  left: 50%;
+  bottom: 80px;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 10px;
+}
+.intro-dot {
+  width: 8px; height: 8px;
+  border-radius: 999px;
+  background: #22D3EE;
+  opacity: 0.35;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .intro-overlay__bg::before { animation: none; }
+  .intro-ball--o .intro-ball__glyph { animation: none; }
+}

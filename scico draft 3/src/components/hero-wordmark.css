@@ -1,0 +1,247 @@
+/* CSS Custom Properties for Hover Animations */
+:root {
+  /* Hover animation values */
+  --hover-scale-title: 1.05;
+  --hover-translate-y: -2px;
+  --hover-glow-opacity: 0.45; /* 50% increase from base 0.3 */
+  --hover-brightness: 1.2;
+  --hover-duration-in: 200ms;
+  --hover-duration-out: 300ms;
+  --hover-easing: cubic-bezier(0.2, 0.8, 0.2, 1);
+  
+  /* Additional glow shadow for hover state */
+  --hover-outer-glow: 0 0 32px rgba(34, 211, 238, 0.3);
+}
+
+/* Reduced motion fallback variables */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --hover-scale-title: 1.0; /* No scaling */
+    --hover-translate-y: 0px; /* No movement */
+    --hover-duration-in: 0ms; /* Instant */
+    --hover-duration-out: 0ms; /* Instant */
+    
+    /* Alternative hover effects using only color/brightness changes */
+    --hover-brightness-alt: 1.15; /* Subtle brightness increase */
+    --hover-glow-opacity-alt: 0.5; /* Enhanced glow without movement */
+  }
+}
+
+.hero-wordmark {
+  position: relative;
+  z-index: 5;
+  margin-top: clamp(12px, 3.5vh, 28px);
+  margin-bottom: clamp(18px, 5vh, 40px);
+}
+
+.hero-wordmark__title {
+  margin: 0;
+  font-family: "Spectral", "Georgia", serif;
+  font-weight: 800;
+  font-size: clamp(56px, 8vw, 124px);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  color: #FFFFFF;
+  
+  /* Layered glow effect: inner white bloom + outer cyan halo */
+  text-shadow:
+    0 0 8px rgba(255, 255, 255, 0.3),
+    0 0 16px rgba(34, 211, 238, 0.4),
+    0 0 24px rgba(34, 211, 238, 0.2),
+    0 4px 12px rgba(0, 0, 0, 0.3);
+  
+  /* Initial hidden state */
+  opacity: 0;
+  transform: translateY(20px);
+  
+  /* Transition properties for intro animation and hover effects */
+  transition: 
+    opacity 800ms cubic-bezier(0.2, 0.8, 0.2, 1),
+    transform 800ms cubic-bezier(0.2, 0.8, 0.2, 1),
+    text-shadow 200ms cubic-bezier(0.2, 0.8, 0.2, 1),
+    filter 200ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.hero-wordmark__title--visible {
+  opacity: 1;
+  transform: translateY(0);
+  
+  /* Override transition timing for hover interactions after intro completes */
+  transition: 
+    transform 200ms cubic-bezier(0.2, 0.8, 0.2, 1),
+    text-shadow 200ms cubic-bezier(0.2, 0.8, 0.2, 1),
+    filter 200ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+/* Hover and focus state styles for SciCo title */
+.hero-wordmark__title:hover,
+.hero-wordmark__title:focus {
+  transform: scale(var(--hover-scale-title)) translateY(var(--hover-translate-y));
+  
+  /* Enhanced glow effects with additional outer glow */
+  text-shadow:
+    0 0 8px rgba(255, 255, 255, var(--hover-glow-opacity)),
+    0 0 16px rgba(34, 211, 238, 0.6),
+    0 0 24px rgba(34, 211, 238, 0.3),
+    var(--hover-outer-glow),
+    0 4px 12px rgba(0, 0, 0, 0.3);
+  
+  /* Performance optimization */
+  will-change: transform, text-shadow;
+}
+
+.hero-wordmark__tagline {
+  margin: 0;
+  margin-top: clamp(8px, 1.5vh, 16px);
+  font-family: "Spectral", "Georgia", serif;
+  font-weight: 600;
+  font-size: clamp(16px, 2.2vw, 24px);
+  line-height: 1.3;
+  color: #FFFFFF;
+  
+  /* Very light cyan halo for readability */
+  text-shadow:
+    0 0 6px rgba(34, 211, 238, 0.15),
+    0 2px 8px rgba(0, 0, 0, 0.4);
+  
+  /* Initial hidden state */
+  opacity: 0;
+  transform: translateY(20px);
+  filter: blur(4px);
+  letter-spacing: 0.05em;
+  
+  /* Transition properties for the reveal animation */
+  transition: 
+    opacity 600ms cubic-bezier(0.2, 0.8, 0.2, 1),
+    transform 600ms cubic-bezier(0.2, 0.8, 0.2, 1),
+    filter 600ms cubic-bezier(0.2, 0.8, 0.2, 1),
+    letter-spacing 600ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.hero-wordmark__tagline--visible {
+  opacity: 1;
+  transform: translateY(0);
+  filter: blur(0);
+  letter-spacing: 0.02em;
+  
+  /* Override transition timing for hover interactions after intro completes */
+  transition: 
+    filter var(--hover-duration-in) var(--hover-easing),
+    text-shadow var(--hover-duration-in) var(--hover-easing);
+}
+
+/* Shimmer underline effect */
+.hero-wordmark__tagline--visible::after {
+  content: "";
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background: linear-gradient(90deg, 
+    transparent 0%, 
+    rgba(34, 211, 238, 0.6) 50%, 
+    transparent 100%
+  );
+  box-shadow: 0 0 4px rgba(34, 211, 238, 0.4);
+  animation: shimmer-underline 300ms ease-out 200ms forwards;
+}
+
+@keyframes shimmer-underline {
+  0% {
+    width: 0;
+    opacity: 1;
+  }
+  80% {
+    width: 100%;
+    opacity: 1;
+  }
+  100% {
+    width: 100%;
+    opacity: 0;
+  }
+}
+
+/* Reduced motion: instant appearance, no shimmer, alternative hover effects */
+@media (prefers-reduced-motion: reduce) {
+  .hero-wordmark__title {
+    transition: none;
+  }
+  
+  .hero-wordmark__title--visible {
+    opacity: 1;
+    transform: translateY(0);
+    transition: none;
+  }
+  
+  .hero-wordmark__tagline {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+    letter-spacing: 0.02em;
+    transition: none;
+  }
+  
+  .hero-wordmark__tagline--visible {
+    transition: none;
+  }
+  
+  .hero-wordmark__tagline--visible::after {
+    display: none;
+  }
+  
+  /* Override hover and focus animations - disable scaling and transform animations */
+  .hero-wordmark__title:hover,
+  .hero-wordmark__title:focus {
+    transform: none; /* No scaling or movement */
+    
+    /* Alternative hover/focus effect: enhanced glow only */
+    text-shadow:
+      0 0 8px rgba(255, 255, 255, var(--hover-glow-opacity-alt)),
+      0 0 16px rgba(34, 211, 238, 0.6),
+      0 0 24px rgba(34, 211, 238, 0.4),
+      0 4px 12px rgba(0, 0, 0, 0.3);
+    
+    /* Use brightness filter as alternative interactive feedback */
+    filter: brightness(var(--hover-brightness-alt));
+  }
+  
+  /* Alternative hover/focus effect for tagline - brightness and color changes only */
+  .hero-wordmark__tagline:hover,
+  .hero-wordmark__tagline:focus {
+    filter: brightness(var(--hover-brightness));
+    
+    /* Enhanced text shadow with increased opacity */
+    text-shadow:
+      0 0 8px rgba(34, 211, 238, 0.25),
+      0 2px 8px rgba(0, 0, 0, 0.52);
+  }
+}
+
+/* Hover and focus state styles for tagline */
+.hero-wordmark__tagline:hover,
+.hero-wordmark__tagline:focus {
+  filter: brightness(var(--hover-brightness));
+  
+  /* Enhanced text shadow with 30% opacity increase */
+  text-shadow:
+    0 0 6px rgba(34, 211, 238, 0.195),
+    0 2px 8px rgba(0, 0, 0, 0.52);
+  
+  /* Performance optimization */
+  will-change: filter, text-shadow;
+}
+
+/* Mobile adjustments */
+@media (max-width: 640px) {
+  .hero-wordmark__tagline {
+    font-size: clamp(14px, 4vw, 18px);
+  }
+}
+
+/* Hide tagline on very small screens to avoid crowding */
+@media (max-width: 480px) {
+  .hero-wordmark__tagline {
+    display: none;
+  }
+}

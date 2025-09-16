@@ -1,0 +1,295 @@
+.scico-home {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  /* Space-like ultra-dark gradient with minimal banding */
+  background:
+    /* subtle cyan edge glow */
+    radial-gradient(900px 520px at 8% 12%, rgba(34, 211, 238, 0.05), transparent 60%),
+    /* subtle fuchsia edge glow */
+    radial-gradient(900px 520px at 92% 88%, rgba(217, 70, 239, 0.04), transparent 60%),
+    /* base deep gradient */
+    linear-gradient(135deg,
+      #050510 0%,
+      #060814 22%,
+      #090D17 52%,
+      #0A0E17 76%,
+      #0B0F18 100%
+    );
+  overflow: hidden;
+}
+
+.scico-home__inner {
+  width: min(1200px, 92vw);
+  margin-inline: auto;
+}
+
+/* Hero wordmark positioning */
+.hero-wordmark {
+  position: relative;
+  z-index: 5; /* above background effects */
+  margin-top: clamp(12px, 3.5vh, 28px);
+  margin-bottom: clamp(18px, 5vh, 40px);
+}
+
+/* Video hero mode - fullscreen background */
+.scico-home--video {
+  position: relative;
+  overflow: hidden;
+  /* Remove centering layout to restore original positioning */
+  display: block;
+  align-items: unset;
+  justify-content: unset;
+  /* Remove theme background for video mode */
+  background: transparent;
+  /* Extend to cover navbar area */
+  margin-top: -100px;
+  padding-top: 100px;
+}
+
+.hero-video-background {
+  position: absolute;
+  top: -100px;
+  left: 0;
+  width: 100%;
+  height: calc(100% + 100px);
+  z-index: 1; /* Above base but below navbar */
+  overflow: hidden;
+}
+
+.hero-video-background video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 1;
+}
+
+.hero-video-overlay {
+  position: absolute;
+  top: -100px;
+  left: 0;
+  width: 100%;
+  height: calc(100% + 100px);
+  background: 
+    /* Very light overlay for text readability only */
+    linear-gradient(135deg, 
+      rgba(5, 5, 16, 0.1) 0%,
+      rgba(6, 8, 20, 0.05) 50%,
+      rgba(9, 13, 23, 0.1) 100%
+    );
+  z-index: 2; /* Above video but below navbar and content */
+  pointer-events: none;
+}
+
+/* Content positioning for video mode */
+.scico-home--video .scico-home__inner {
+  position: relative;
+  z-index: 10;
+  /* Restore original inner container styles */
+  width: min(1200px, 92vw);
+  margin-inline: auto;
+}
+
+.scico-home--video .hero-wordmark {
+  /* Restore original wordmark positioning */
+  position: relative;
+  z-index: 10;
+  margin-top: clamp(12px, 3.5vh, 28px);
+  margin-bottom: clamp(18px, 5vh, 40px);
+}
+
+/* Enhanced text shadows for better visibility over video */
+.scico-home--video .hero-wordmark__title {
+  text-shadow:
+    0 0 8px rgba(255, 255, 255, 0.4),
+    0 0 16px rgba(34, 211, 238, 0.5),
+    0 0 24px rgba(34, 211, 238, 0.3),
+    0 0 40px rgba(0, 0, 0, 0.7),
+    0 4px 12px rgba(0, 0, 0, 0.5);
+}
+
+.scico-home--video .hero-wordmark__tagline {
+  text-shadow:
+    0 0 6px rgba(34, 211, 238, 0.25),
+    0 0 12px rgba(0, 0, 0, 0.7),
+    0 2px 8px rgba(0, 0, 0, 0.5);
+}
+
+
+/* 3D Carousel */
+.carousel {
+  position: relative;
+  height: clamp(200px, 35vh, 400px);
+  perspective: 1200px;
+  transform-style: preserve-3d;
+  margin-top: 1.5rem;
+  transform: translateY(-2vh); /* pull carousel slightly upward so it's fully visible */
+  opacity: 0;
+  transition: opacity 240ms ease-out;
+}
+
+.carousel[data-ready="true"] { opacity: 1; }
+
+.carousel-item {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform-style: preserve-3d;
+  will-change: transform, opacity, filter;
+  transition: opacity 220ms ease, filter 220ms ease;
+}
+
+.carousel-item img {
+  width: clamp(140px, 20vw, 280px);
+  height: clamp(88px, 14vw, 160px);
+  object-fit: cover;
+  border-radius: 14px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.45);
+  transition: transform 300ms ease;
+}
+
+.carousel-item.front img {
+  box-shadow: 0 0 45px rgba(34, 211, 238, 0.35), 0 0 65px rgba(217, 70, 239, 0.25), 0 10px 40px rgba(0, 0, 0, 0.55);
+}
+
+/* Grid fallback for reduced motion */
+.grid-fallback {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  margin-top: 2rem;
+}
+
+.grid-fallback .grid-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 12px;
+}
+
+.grid-fallback .grid-item.front img {
+  outline: 3px solid rgba(34, 211, 238, 0.8);
+  box-shadow: 0 0 35px rgba(34, 211, 238, 0.35), 0 0 55px rgba(217, 70, 239, 0.25);
+}
+
+/* Single-image hero mode */
+.hero {
+  display: grid;
+  place-items: center;
+  margin-top: 1rem;
+  min-height: 70vh; /* assist vertical centering on shorter content */
+}
+
+/* Wrapper that controls responsive width, rounded corners, and glow */
+.hero-figure {
+  position: relative;
+  width: 68vw; /* Desktop target ~65–70% */
+  max-width: 1600px;
+  display: inline-block;
+  border-radius: 16px; /* rounded-xl vibe */
+}
+
+/* Soft cyan/fuchsia diffused glow that blends into background */
+.hero-figure::before {
+  content: "";
+  position: absolute;
+  inset: -14%;
+  border-radius: inherit;
+  background:
+    radial-gradient(60% 60% at 25% 30%, rgba(34, 211, 238, 0.25), transparent 70%),
+    radial-gradient(60% 60% at 75% 70%, rgba(217, 70, 239, 0.20), transparent 72%);
+  filter: blur(48px);
+  opacity: 0.7;
+  z-index: 0; /* behind the image */
+  pointer-events: none;
+}
+
+.hero-figure img,
+.hero-figure video {
+  position: relative;
+  z-index: 1;
+  display: block;
+  width: 100%;
+  height: auto; /* maintain aspect ratio */
+  max-height: 70vh; /* Desktop max height */
+  object-fit: contain; /* prevent distortion */
+  border-radius: inherit;
+  /* Very soft outer ambient shadow to avoid hard outline */
+  box-shadow:
+    0 0 120px rgba(34, 211, 238, 0.08),
+    0 0 140px rgba(217, 70, 239, 0.07),
+    0 18px 55px rgba(0, 0, 0, 0.55);
+  opacity: 0;
+  transition: opacity 260ms ease-out;
+}
+
+.hero-figure video {
+  opacity: 1; /* Videos don't need loading state */
+}
+
+.hero-figure--loading::after {
+  /* simple shimmer bar as a loading indicator */
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(120deg, rgba(224,247,255,0.06) 25%, rgba(224,247,255,0.16) 40%, rgba(224,247,255,0.06) 55%);
+  transform: translateX(-60%);
+  animation: hero-shimmer 1.4s ease-in-out infinite;
+}
+
+@keyframes hero-shimmer {
+  0% { transform: translateX(-60%); }
+  100% { transform: translateX(60%); }
+}
+
+.hero-figure:not(.hero-figure--loading) img { opacity: 1; }
+.hero-figure video { opacity: 1; }
+
+@media (prefers-reduced-motion: reduce) {
+  .carousel { opacity: 1; transition: none; }
+  .hero-figure--loading::after { animation: none; }
+  .hero-figure img { transition: none; opacity: 1; }
+  .hero-figure video { 
+    transition: none; 
+    opacity: 1;
+  }
+}
+
+/* Tablet */
+@media (max-width: 1024px) {
+  .hero-figure { width: 80vw; }
+  .hero-figure img,
+  .hero-figure video { max-height: 60vh; }
+}
+
+/* Mobile */
+@media (max-width: 640px) {
+  .hero-figure { width: 90vw; }
+  .hero-figure img,
+  .hero-figure video { max-height: none; }
+  
+  /* Video background mobile adjustments */
+  .hero-video-background video {
+    /* Maintain full coverage on mobile */
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
+/* Very small screens */
+@media (max-width: 480px) {
+  .hero-video-background video {
+    /* Ensure proper coverage on very small screens */
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
